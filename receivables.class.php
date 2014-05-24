@@ -88,15 +88,18 @@ class Receivables {
 	
 	function get_receivable_check($params){
 		$receivable_id = '';
+		if(isset($params['pickup_date'])){ $pickup_date = "= '".$params['pickup_date']."'"; } else { $pickup_date = 'IS NULL';}
+		if(isset($params['delivery_date'])){ $delivery_date = "= '".$params['delivery_date']."'"; } else { $delivery_date = 'IS NULL';}
 		$sql = "SELECT id FROM receivables 
 	        WHERE customer_id = '{$params['customer_id']}'
 	        AND location_id = '{$params['location_id']}'
 	        AND deposit = '{$params['deposit']}'
 	        AND total = '{$params['total']}'
 	        AND complete = '{$params['complete']}'
-	        AND pickup_date = '{$params['pickup_idate']}'
-	        AND delivery_date = '{$params['delivery_date']}'
+	        AND pickup_date $pickup_date
+	        AND delivery_date $delivery_date
 	        ";
+	        //die($sql);
 	    foreach ($this->krdb->query($sql) as $row) { 
 	         $receivable_id = $row['id'];     
 	    }
@@ -122,7 +125,6 @@ class Receivables {
 			 LEFT JOIN customers c on c.id = r.customer_id
 			 LEFT JOIN locations l on l.customer_id = c.id
 			 WHERE l.deleted is not true and c.deleted is not true
-			 GROUP BY c.name,l.address,l.city,l.zip,l.phone,l.fax
 			 Order by r.date_added desc
 	        ";
 	    return $this->krdb->query($sql);

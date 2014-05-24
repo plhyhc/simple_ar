@@ -43,7 +43,7 @@ if(isset($_GET['message'])){
 <table cellpadding="2" cellspacing="0" border="0" width="100%">
   <tr>
     <td>Customer</td>
-    <td><input type="text" name="customer_name" id="customer_name" value="<?php echo $customer_info[0]['name']; ?>" size="40" /> <a href="javascript:void(0);" onclick="return remove_customer('<?php echo $customer_id; ?>');" style="font-size: 11px;">Delete Customer</a></td>
+    <td><input type="text" name="customer_name" id="customer_name" value="<?php echo $customer_info[0]['name']; ?>" size="40" /> <a href="javascript:void(0);" onclick="return Custom.remove_customer('<?php echo $customer_id; ?>');" style="font-size: 11px;">Delete Customer</a></td>
   </tr>
   <tr>
     <td>Email</td>
@@ -73,7 +73,7 @@ if(isset($_GET['message'])){
     <td><input type="text" name="customer_fax[]" id="customer_fax" value="<?php echo $li['fax']; ?>" size="45" /></td>
   </tr>
   <tr>
-    <td colspan="2" align="right"><a href="javascript:void(0);" onclick="return remove_location('<?php echo $li['id']; ?>','<?php echo $customer_id; ?>');" style="font-size: 11px;">Remove Location</a></td>
+    <td colspan="2" align="right"><a href="javascript:void(0);" onclick="return Custom.remove_location('<?php echo $li['id']; ?>','<?php echo $customer_id; ?>');" style="font-size: 11px;">Remove Location</a></td>
   </tr>
   <tr>
     <td colspan="2"><hr><input type="hidden" name="location_id[]" value="<?php echo $li['id']; ?>" /></td>

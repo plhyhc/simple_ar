@@ -114,21 +114,20 @@ if($type == 'save'){
 
 } else if ($type == 'add'){
 	$already_exists = false;
-	$customer_name = $_POST['customer_name'];
-	$customer_email = $_POST['customer_email'];
-	$customer_address = $_POST['customer_address'];
-	$customer_city = $_POST['customer_city'];
-	$customer_zip = $_POST['customer_zip'];
-	$customer_phone = $_POST['customer_phone'];
-	$customer_fax = $_POST['customer_fax'];
-
+	$pickup_date = ($_POST['pickup_date']) ? date("Y-m-d",strtotime($_POST['pickup_date'])) : null;
+	$delivery_date = ($_POST['delivery_date']) ? date("Y-m-d",strtotime($_POST['delivery_date'])) : null;
+	$deposit = $_POST['deposit'];
+	$total = $_POST['total'];
+	$complete = $_POST['complete'];
+	$location_id = $_POST['location_id'];
+	$customer_id = $_POST['customer_id'];
 
 	$rec_params = [
       'customer_id'       => $customer_id,
       'location_id'   => $location_id,
-      'deposit'     => $deposit,
-      'total'             => $total,
-      'complete'      => $complete,
+      'deposit'     => number_format($deposit,2,'.',''),
+      'total'             => number_format($total,2,'.',''),
+      'complete'      => number_format($complete,2,'.',''),
       'pickup_date'   => $pickup_date,
       'delivery_date'     => $delivery_date
     ];
@@ -138,7 +137,7 @@ if($type == 'save'){
 
 	  header("Location: receivables.php?message=Added New Successfully");
     	die();
-	}
+	
 
 
 }

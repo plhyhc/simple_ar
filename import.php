@@ -85,23 +85,25 @@ if(count($files1) > 2){
           }
           if($location_id){
             $already_location++;
-              if(!$deposit){ $deposit = 0.00; }
-              if(!$total){ $total = 0.00; }
-              if(!$complete){ $complete = 0.00; }
-              if($pickup_date){ $pickup_date = date("Y-m-d H:i:s",strtotime($pickup_date)); } else { $pickup_date = NULL; }
-              if($delivery_date){ $delivery_date = date("Y-m-d H:i:s",strtotime($delivery_date)); } else { $delivery_date = NULL; }
+              if($deposit == ''){ $deposit = '0.00'; }
+              if($total == ''){ $total = '0.00'; }
+              if($complete == ''){ $complete = '0.00'; }
+              if($pickup_date){ $pickup_date = date("Y-m-d",strtotime($pickup_date)); } else { $pickup_date = null; }
+              if($delivery_date){ $delivery_date = date("Y-m-d",strtotime($delivery_date)); } else { $delivery_date = null; }
               
             $rec_params = [
               'customer_id'       => $customer_id,
-              'location_id'   => $location_id,
-              'deposit'     => $deposit,
+              'location_id'       => $location_id,
+              'deposit'           => $deposit,
               'total'             => $total,
-              'complete'      => $complete,
-              'pickup_date'   => $pickup_date,
+              'complete'          => $complete,
+              'pickup_date'       => $pickup_date,
               'delivery_date'     => $delivery_date
             ];
+            //
             $rec_check = $c_customers->get_receivable_check($rec_params);
             if(!$rec_check){
+              //die(print_r($rec_params));
                 $receiveble_id = $c_customers->create_receivable($rec_params);
                 $imported_receive++;
             } else {
