@@ -9,14 +9,15 @@ class Users {
 	}
 
 	function login_process($params){
-		$customer_id = '';
-		$sql = "SELECT id FROM customers 
-	        WHERE name = '$customer_name'
+		$user_id = '';
+		$sql = "SELECT id FROM users 
+	        WHERE username = '{$params['username']}'
+	        	AND password = '{$params['password']}'
 	        ";
 	    foreach ($this->krdb->query($sql) as $row) { 
-	         $customer_id = $row['id'];     
+	         $user_id = $row['id'];     
 	    }
-	    return $customer_id;
+	    return $user_id;
 	}
 
 }

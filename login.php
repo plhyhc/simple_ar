@@ -2,15 +2,28 @@
 $login_page = true;
 require("main.php");
 
+$message = '';
 if(isset($_POST['username'])){
 
 	$username = $_POST['username'];
 	$password = $_POST['password'];
 
+	$pre_salt = md5($password);
+	$salted = md5($pre_salt.$salt);
+	$user_params = [
+		'username' => $username,
+		'password' => $salted
+	];
 
-	$_SESSION['logged_in'] = '123kjdn43kj3nskdj';
-	header("Location: /kraftsrestore/");
-	die();
+	$_SESSION['user_id'] = $k_users->login_process($user_params);
+
+	if($_SESSION['user_id']){
+		$_SESSION['logged_in'] = '123kjdn43kj3nskdj';
+		header("Location: /kraftsrestore/");
+		die();
+	} else {
+		$message = "Login Failed.  Username / Password incorrect.";
+	}
 }
 session_destroy();
 
@@ -66,7 +79,7 @@ session_destroy();
 		<div class="alert alert-error display-hide">
 			<button class="close" data-close="alert"></button>
 			<span>
-				 Enter any username and password.
+				 <?php echo $message; ?>
 			</span>
 		</div>
 		<div class="form-group">
@@ -101,12 +114,23 @@ session_destroy();
 <!-- END COPYRIGHT -->
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 <!-- BEGIN CORE PLUGINS -->
+
 <!--[if lt IE 9]>
 <script src="assets/plugins/respond.min.js"></script>
-<script src="assets/plugins/excanvas.min.js"></script> 
-<![endif]-->
-
-
+        <script src="assets/plugins/excanvas.min.js"></script> 
+        <![endif]-->
+        <script src="assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
+        <script src="assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+        <!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+        <script src="assets/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
+        <script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+        <script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+        <script src="assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+        <script src="assets/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+        <script src="assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+        <script src="assets/plugins/jquery.validate.min.js" type="text/javascript"></script>
+        <script src="assets/plugins/select2/select2.min.js" type="text/javascript"></script>
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="assets/scripts/app.js" type="text/javascript"></script>
 <script src="assets/scripts/login.js" type="text/javascript"></script>
@@ -115,6 +139,9 @@ session_destroy();
 jQuery(document).ready(function() {     
   App.init();
   Login.init();
+  <?php if ($message){ ?>
+  $('.alert-error', $('.login-form')).show();
+	<?php } ?>
 });
 </script>
 <!-- END JAVASCRIPTS -->
