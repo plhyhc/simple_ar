@@ -1,8 +1,24 @@
 <?php
 require("main.php");
 ini_set("auto_detect_line_endings", "1");
-$dir = 'imports';
-$files1 = scandir($dir);
+
+$dir = '';
+$check_count = 0;
+
+if(isset($_FILES['file_upload']['tmp_name'])){
+  $files1[] = $_FILES['file_upload']['tmp_name'];
+  $files_names[] = $_FILES['file_upload']['name'];
+  $check_count = 0;
+} else {
+  $dir = 'imports/';
+  $files1 = scandir($dir);
+  $files_names = $files1;
+}
+foreach($files1 as $k => $f){
+  if(in_array($f,['.','..','.DS_Store'])){
+    unset($files1[$k]);
+  }
+}
 
 $main->get_header(); 
 
@@ -18,14 +34,13 @@ $already_location = 0;
 $already_receive = 0;
 $imported_receive = 0;
 
-if(count($files1) > 2){
+if(count($files1) > $check_count){
   foreach($files1 as $file){
     $row = 1;
-    if (($handle = fopen("imports/".$file, "r")) !== FALSE) {
+    if (($handle = fopen($dir.$file, "r")) !== FALSE) {
 
         while (($data = fgetcsv($handle, 0, "\t")) !== FALSE) {
             $num = count($data);
-            //echo "<tr>";
 
             $customer_name    = trim($data[0]);
             $address      = trim($data[1]);
@@ -45,11 +60,6 @@ if(count($files1) > 2){
             if($city_zip && is_numeric($zip)){
               $city = substr($city_zip,0,-5);
             }
-
-            //import process
-            // check if customer name already exists.  If it does grab id. if not insert.
-            // check if location for customer exists.  if it does grab id. if not insert.
-            // insert into receivables with customer_id
 
             $already_exists = false;
             $customer_id = $c_customers->getby_name($customer_name);
@@ -110,41 +120,34 @@ if(count($files1) > 2){
               $already_receive++;
             }
           
+          }          
           }
 
-          
-          }
-        /*
-            echo '<td>'.$customer_name.'</td>';
-            echo '<td>'.$address.'</td>';
-            echo '<td>'.$city.'</td>';
-            echo '<td>'.$zip.'</td>';
-            echo '<td>'.$phone.'</td>';
-            echo '<td>'.$fax.'</td>';
-            echo '<td>'.$pickup_date.'</td>';
-            echo '<td>'.$deposit.'</td>';
-            echo '<td>'.$delivery_date.'</td>';
-            echo '<td>'.$total.'</td>';
-            echo '<td>'.$complete.'</td>';
-            */
-
-            /*
-            $row++;
-            for ($c=0; $c < $num; $c++) {
-                echo '<td>'.$data[$c] . "</td>";
-            }
-            */
-            //echo '</tr>';
         }
         fclose($handle);
     }
   }
 
-  //echo '</table>';
+}
+  ?>
+  <h3>Import Files</h3>
+  <small>Upload single files one by one, or place in "imports" folder to import multiple files</small>
+  <br /><br />
+  <form method="post" name="file_u" action="import.php" enctype="multipart/form-data">
+  Single File Upload: <input type="file" name="file_upload" /><br />
+  <input type="submit" name="submit" value="Upload" />
+  </form>
+  <br /><br />
+<?php
 
-  foreach($files1 as $file){
+if(count($files1) > $check_count){
+?>
+  <hr>
+<h3>Import Results</h3>
+  <?php
+  foreach($files_names as $file){
     if($file != '.' && $file != '..'){
-      echo "Imported: ".$file."<br />";
+      echo "<b>Imported: ".$file."</b><br />";
     }
   }
 
