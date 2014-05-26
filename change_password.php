@@ -1,5 +1,5 @@
 <?php
-require("main.php");
+require("config/main.php");
 
 $message = "New Password was not supplied";
 if(isset($_POST['new_pass'])){

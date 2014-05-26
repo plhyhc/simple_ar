@@ -1,6 +1,6 @@
 <?php
 $login_page = true;
-require("main.php");
+require("config/main.php");
 
 $message = '';
 if(isset($_POST['username'])){

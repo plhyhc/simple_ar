@@ -1,5 +1,5 @@
 <?php
-require("main.php");
+require("config/main.php");
 ini_set("auto_detect_line_endings", "1");
 
 $dir = '';
@@ -47,6 +47,7 @@ if(count($files1) > $check_count){
             $city_zip       = trim($data[2]);
             $phone        = trim($data[3]);
             $fax        = trim($data[4]);
+            $invoice_num = trim($data[5]);
             $pickup_date    = trim($data[6]);
             $deposit      = clean_number(trim($data[7]));
             $delivery_date    = clean_number(trim($data[8]));

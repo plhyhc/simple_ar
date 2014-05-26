@@ -168,6 +168,17 @@ class Receivables {
 	        return $return;
 	}
 
+	function get_revenue_bymonth(){
+		$sql = "SELECT 
+				DATE_FORMAT( (CASE when r.delivery_date is null then r.pickup_date else r.delivery_date end),  '%Y-%m' ) AS del_month,
+				sum(r.complete) as total
+			 FROM receivables r
+			 WHERE r.deleted is not true
+			 GROUP BY del_month
+	        ";
+	    return $this->krdb->query($sql);
+	}
+
 
 }
 

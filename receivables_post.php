@@ -1,6 +1,6 @@
 <?php
 
-require("main.php");
+require("config/main.php");
 
 $type = $_POST['type'];
 $message = "";

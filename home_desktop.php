@@ -1,5 +1,5 @@
 <?php
-require("main.php");
+require("config/main.php");
 
 $current_month = date("n",time());
 $current_year = date("Y",time());

@@ -1,5 +1,5 @@
 <?php
-require("main.php");
+require("config/main.php");
 ini_set("auto_detect_line_endings", "1");
 $dir = 'imports';
 $files1 = scandir($dir);

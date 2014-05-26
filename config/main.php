@@ -9,21 +9,23 @@ if(!isset($_SESSION['logged_in'])){
 }
 if($not_logged_in){
     if(!$login_page){
-        header("Location: /kraftsrestore/login.php");
+        header("Location: login.php");
         die();
     }
 }
 
-$salt = '_kraft_simple_ar';
+include 'config.php';
 
+if($db_host == '<db_host>' || $db_name == '<db_name>' || $db_user == '<db_user>' || $db_pass == '<db_pass>'){
+    header("Location: install");
+    die();
+}
 
-
-date_default_timezone_set('America/Los_Angeles');
 
 $bdb = new PDO(
-    'mysql:host=localhost;dbname=db_name',
-    'db_user',
-    'db_password');
+    'mysql:host='.$db_host.';dbname='.$db_name,
+    $db_user,
+    $db_pass);
 $bdb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
@@ -78,9 +80,6 @@ class main {
         </head>
         <!-- END HEAD -->
         <!-- BEGIN BODY -->
-        ';
-        flush();
-        $header .='
         <body class="page-header-fixed">
         <!-- BEGIN HEADER -->
         <div class="header navbar navbar-inverse navbar-fixed-top">
