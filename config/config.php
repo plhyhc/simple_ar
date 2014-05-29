@@ -1,9 +1,11 @@
 <?php
 
-$db_name='<db_name>';
-$db_host='<db_host>';
-$db_user='<db_user>';
-$db_pass='<db_pass>';
+$db_params = [
+'db_name' => '<un_set>',
+'db_host' => '<un_set>',
+'db_user' => '<un_set>',
+'db_pass' => '<un_set>'
+];
 
 date_default_timezone_set('America/Los_Angeles');
 

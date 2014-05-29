@@ -128,7 +128,7 @@ if($type == 'save'){
       	header("Location: customers_edit.php?id=".$customer_id."&message=Customer Already Exists: ".$customer_name);
       	die();
   	} else {
-		$params = ['executes' => ['name' => $customer_name,'email' => $customer_email]];
+		$params = ['name' => $customer_name,'email' => $customer_email];
     	$customer_id = $c_customers->create_customer($params);
 	}
 
@@ -150,6 +150,26 @@ if($type == 'save'){
 	    ];
 	    $location_id = $c_customers->create_location($loc_params);
 	  }
+
+	    $pickup_date = ($_POST['pickup_date']) ? date("Y-m-d",strtotime($_POST['pickup_date'])) : null;
+		$delivery_date = ($_POST['delivery_date']) ? date("Y-m-d",strtotime($_POST['delivery_date'])) : null;
+		$deposit = $_POST['deposit'];
+		$total = $_POST['total'];
+		$complete = $_POST['complete'];
+		$invoice_number = $_POST['invoice_number'];
+
+		$rec_params = [
+	      'customer_id'       => $customer_id,
+	      'location_id'   	=> $location_id,
+	      'deposit'     	=> number_format($deposit,2,'.',''),
+	      'total'             => number_format($total,2,'.',''),
+	      'complete'      => number_format($complete,2,'.',''),
+	      'pickup_date'   => $pickup_date,
+	      'delivery_date'     => $delivery_date,
+	      'invoice_number'	=> $invoice_number
+	    ];
+
+	    $receiveble_id = $r_receivables->create_receivable($rec_params);
 
 	  header("Location: customers.php?message=Customer Added: ".$customer_name);
     	die();

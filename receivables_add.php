@@ -63,6 +63,10 @@ if(isset($_GET['message'])){
   </tr>
   <?php }} ?>
   <tr>
+    <td style="text-align: right;">Invoice Number</td>
+    <td><input type="text" name="invoice_number" id="invoice_number" size="25" onkeyup="Custom.rec_fields(this)" /></td>
+  </tr>
+  <tr>
     <td style="text-align: right;">Pickup Date</td>
     <td><input type="text" name="pickup_date" id="pickup_date" size="20" data-beatpicker="true" data-beatpicker-module="today" /></td>
   </tr>

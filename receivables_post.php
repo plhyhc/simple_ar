@@ -121,18 +121,20 @@ if($type == 'save'){
 	$complete = $_POST['complete'];
 	$location_id = $_POST['location_id'];
 	$customer_id = $_POST['customer_id'];
+	$invoice_number = $_POST['invoice_number'];
 
 	$rec_params = [
       'customer_id'       => $customer_id,
-      'location_id'   => $location_id,
-      'deposit'     => number_format($deposit,2,'.',''),
+      'location_id'   	=> $location_id,
+      'deposit'     	=> number_format($deposit,2,'.',''),
       'total'             => number_format($total,2,'.',''),
       'complete'      => number_format($complete,2,'.',''),
       'pickup_date'   => $pickup_date,
-      'delivery_date'     => $delivery_date
+      'delivery_date'     => $delivery_date,
+      'invoice_number'	=> $invoice_number
     ];
 
-    $receiveble_id = $c_customers->create_receivable($rec_params);
+    $receiveble_id = $r_receivables->create_receivable($rec_params);
 
 
 	  header("Location: receivables.php?message=Added New Successfully");

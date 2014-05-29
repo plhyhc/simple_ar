@@ -47,12 +47,14 @@ if(count($files1) > $check_count){
             $city_zip       = trim($data[2]);
             $phone        = trim($data[3]);
             $fax        = trim($data[4]);
-            $invoice_num = trim($data[5]);
+            $invoice_number = substr(trim($data[5]),0,4);
             $pickup_date    = trim($data[6]);
             $deposit      = clean_number(trim($data[7]));
             $delivery_date    = clean_number(trim($data[8]));
             $total        = clean_number(trim($data[9]));
             $complete     = clean_number(trim($data[10]));
+
+            $invoice_number = (($invoice_number) ? (is_numeric($invoice_number)) ? $invoice_number : 0 : 0);
 
             $zip = ($city_zip) ? substr($city_zip, -5) : '';
             $zip = (is_numeric($zip)) ? $zip : '';
@@ -70,7 +72,7 @@ if(count($files1) > $check_count){
             }
 
           if(!$already_exists){
-            $params = ['executes' => ['name' => $customer_name]];
+            $params = ['name' => $customer_name];
             $customer_id = $c_customers->create_customer($params);
             $imported_customer++;
           }
@@ -105,6 +107,7 @@ if(count($files1) > $check_count){
             $rec_params = [
               'customer_id'       => $customer_id,
               'location_id'       => $location_id,
+              'invoice_number'    => $invoice_number,
               'deposit'           => $deposit,
               'total'             => $total,
               'complete'          => $complete,
@@ -112,10 +115,10 @@ if(count($files1) > $check_count){
               'delivery_date'     => $delivery_date
             ];
             //
-            $rec_check = $c_customers->get_receivable_check($rec_params);
+            $rec_check = $r_receivables->get_receivable_check($rec_params);
             if(!$rec_check){
               //die(print_r($rec_params));
-                $receiveble_id = $c_customers->create_receivable($rec_params);
+                $receiveble_id = $r_receivables->create_receivable($rec_params);
                 $imported_receive++;
             } else {
               $already_receive++;

@@ -16,17 +16,11 @@ if($not_logged_in){
 
 include 'config.php';
 
-if($db_host == '<db_host>' || $db_name == '<db_name>' || $db_user == '<db_user>' || $db_pass == '<db_pass>'){
+if(in_array('<db_unset>',$db_params)){
     header("Location: install");
     die();
 }
 
-
-$bdb = new PDO(
-    'mysql:host='.$db_host.';dbname='.$db_name,
-    $db_user,
-    $db_pass);
-$bdb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
 class main {
@@ -309,15 +303,18 @@ class main {
     
 }
 
-include 'customers.class.php';
-include 'receivables.class.php';
-include 'users.class.php';
+include 'classes/dbhelper.class.php';
+include 'classes/customers.class.php';
+include 'classes/receivables.class.php';
+include 'classes/users.class.php';
 
-$c_customers = new Customers($bdb);
+$dbhelper = new DBHelper($db_params);
 
-$r_receivables = new Receivables($bdb);
+$c_customers = new Customers($db_params);
 
-$k_users = new Users($bdb);
+$r_receivables = new Receivables($db_params);
+
+$k_users = new Users($db_params);
 
 $main = new main();
 

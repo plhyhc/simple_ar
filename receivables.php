@@ -11,6 +11,7 @@ $main->get_header();
   <tr>
     <th>Customer</th>
     <th>Address</th>
+    <th>Invoice Number</th>
     <th>Pickup Date</th>
     <th>Delivery Date</th>
     <th>Deposit</th>
@@ -26,6 +27,7 @@ $main->get_header();
     echo '<tr>
       <td>'.$receivable['name'].'</td>
       <td>'.$receivable['address'].'<br />'.$receivable['city'].(($receivable['city'] && $receivable['zip']) ? ', ' : ' ').$receivable['zip'].'</td>
+      <td>'.$receivable['invoice_number'].'</td>
       <td>'.$receivable['pickup_date'].'</td>
       <td>'.$receivable['delivery_date'].'</td>
       <td>$'.(($receivable['deposit']) ? number_format($receivable['deposit'],2) : '0.00').'</td>
