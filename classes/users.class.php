@@ -1,11 +1,11 @@
 <?php
 
-class Users {
+class Users extends DBHelper {
 
 	public $krdb = '';
 
 	function __construct($bdb){
-		$this->krdb = $bdb;
+		parent::__construct($bdb);
 	}
 
 	function login_process($params){
