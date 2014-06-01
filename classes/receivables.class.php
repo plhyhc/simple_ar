@@ -59,7 +59,13 @@ class Receivables extends DBHelper {
 	    return $receivable_id;
 	}
 
-	function get_receivables_list(){
+	function get_receivables_list($params = []){
+		$where = '';
+		if(count($params)){
+			foreach($params as $clause){
+				$where .= " and ".$clause;
+			}
+		}
 		$sql = "SELECT c.id,
 						l.id as location_id,
 						c.name,
@@ -78,7 +84,7 @@ class Receivables extends DBHelper {
 			 FROM receivables r
 			 LEFT JOIN customers c on c.id = r.customer_id
 			 LEFT JOIN locations l on l.customer_id = c.id
-			 WHERE l.deleted is not true and c.deleted is not true
+			 WHERE l.deleted is not true and c.deleted is not true $where
 			 Order by r.date_added desc
 	        ";
 	    return $this->krdb->query($sql);

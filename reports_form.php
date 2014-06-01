@@ -8,15 +8,15 @@ for($x=0;$x<4;$x++){
 	$years[] = date("Y",strtotime("-$x year"));
 }
 sort($years);
-
-$report = [
+$reports = [];
+$reports[1] = [
 	'title' 	=> 'Month Overview',
-	'action'	=> 'reports/month_overview.php',
+	'action'	=> 'report_month_overview.php',
 	'tools'		=> [
 		[
 			'label' => 'Month',
 			'type'	=> 'select',
-			'name'	=> 'mnoth',
+			'name'	=> 'month',
 			'options'	=> [
 				'01','02','03','04','05','06','07','08','09','10','11','12'
 			],
@@ -33,12 +33,14 @@ $report = [
 
 ];
 
+if(isset($_GET['id']) && count($reports)){
 
+$report = $reports[$_GET['id']];
 ?>
 
 <h3><?php echo $report['title']; ?></h3>
 
-<form mehtod="post" name="report_form" action="<?php echo $report['action']; ?>">
+<form method="post" name="report_form" action="<?php echo $report['action']; ?>">
 <table cellpadding="5" cellspacing="0" border="0" >
 <?php 
 foreach($report['tools'] as $tool){
@@ -76,6 +78,6 @@ foreach($report['tools'] as $tool){
 
 </table>
 </form>
-
+<?php } ?>
 
 <?php $main->get_footer(); ?>

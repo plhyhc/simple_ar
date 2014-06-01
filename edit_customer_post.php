@@ -10,16 +10,14 @@ if($type == 'save'){
 	$customer_name = $_POST['customer_name'];
 	$customer_email = $_POST['customer_email'];
 
-	$sql = "UPDATE customers SET 
-				name = :name,
-				email = :email
-			WHERE id = '{$customer_id}'";
-	        $stmt = $bdb->prepare ($sql);
-	        $stmt -> bindParam(':name', $customer_name);
-	        $stmt -> bindParam(':email', $customer_email);
-	        $stmt -> execute();
-	        $stmt->closeCursor();
-        	unset($stmt);
+	$params = ['executes' => [
+			'name' => $customer_name,
+			'email' => $customer_email
+		], 
+		'where' => ['id' => $customer_id],
+		'table' => 'customers'
+	];
+	$dbhelper->update($params);
 
 	$location_ids = $_POST['location_id'];
 	$customer_address = $_POST['customer_address'];
@@ -32,39 +30,30 @@ if($type == 'save'){
 		if($location_ids[$x]){
 			//update existing
 
-			$sql = "UPDATE locations SET 
-				address = :address,
-				city = :city,
-				zip = :zip,
-				phone = :phone,
-				fax = :fax
-			WHERE id = '{$location_ids[$x]}'";
-	        $stmt = $bdb->prepare ($sql);
-	        $stmt -> bindParam(':address', $customer_address[$x]);
-	        $stmt -> bindParam(':city', $customer_city[$x]);
-	        $stmt -> bindParam(':zip', $customer_zip[$x]);
-	        $stmt -> bindParam(':phone', $customer_phone[$x]);
-	        $stmt -> bindParam(':fax', $customer_fax[$x]);
-	        $stmt -> execute();
-	        $stmt->closeCursor();
-        	unset($stmt);
+			$params = ['executes' => [
+					'address' => $customer_address,
+					'city' => $customer_city,
+					'zip' => $customer_zip,
+					'phone' => $customer_phone,
+					'fax' => $customer_fax
+				], 
+				'where' => ['id' => $location_ids[$x]],
+				'table' => 'locations'
+			];
+			$dbhelper->update($params);
 
 		} else {
 			//add new location, if variable exist
 			if($customer_address[$x] || $customer_city[$x] || $customer_zip[$x] || $customer_phone[$x] || $customer_fax[$x]){
-				$params = [
-					'address' 		=> $customer_address[$x],
+        		 $loc_params = [
+	             	'address' 		=> $customer_address[$x],
 					'city'			=> $customer_city[$x],
 					'zip'			=> $customer_zip[$x],
 					'phone'			=> $customer_phone[$x],
 					'fax'			=> $customer_fax[$x],
 					'customer_id'	=> $customer_id
-				];
-				$sql = "INSERT INTO locations (address,city,zip,phone,fax,customer_id) VALUES (:address,:city,:zip,:phone,:fax,:customer_id)";
-		        $stmt = $bdb->prepare ($sql);
-		        $stmt -> execute($params);
-		        $stmt->closeCursor();
-        		unset($stmt);
+	            ];
+	            $location_id = $c_customers->create_location($loc_params);
 			}
 		}
 
@@ -76,39 +65,34 @@ if($type == 'save'){
 
 } else if($type == 'remove_location'){
 	$location_id = $_POST['location_id'];
-	$del = TRUE;
-	$sql = "UPDATE locations SET 
-			deleted = :deleted
-		WHERE id = '{$location_id}'";
-        $stmt = $bdb->prepare ($sql);
-        $stmt -> bindParam(':deleted', $del);
-        $stmt -> execute();
-        $stmt->closeCursor();
-    	unset($stmt);
+    	$params = ['executes' => [
+				'deleted' => TRUE
+			], 
+			'where' => ['id' => $location_id],
+			'table' => 'locations'
+		];
+		$dbhelper->update($params);
+
     	$message = "Customer Location Removed";
 } else if($type == 'remove_customer'){
 	$customer_id = $_POST['customer_id'];
 	//remove customer
-	$del = TRUE;
-	$sql = "UPDATE customers SET 
-			deleted = :deleted
-		WHERE id = '{$customer_id}'";
-        $stmt = $bdb->prepare ($sql);
-        $stmt -> bindParam(':deleted', $del);
-        $stmt -> execute();
-        $stmt->closeCursor();
-    	unset($stmt);
-
+	$params = ['executes' => [
+			'deleted' => TRUE
+		], 
+		'where' => ['id' => $customer_id],
+		'table' => 'customers'
+	];
+	$dbhelper->update($params);
 	//remove locations
-	$del = TRUE;
-	$sql = "UPDATE locations SET 
-			deleted = :deleted
-		WHERE customer_id = '{$customer_id}'";
-        $stmt = $bdb->prepare ($sql);
-        $stmt -> bindParam(':deleted', $del);
-        $stmt -> execute();
-        $stmt->closeCursor();
-    	unset($stmt);
+	$params = ['executes' => [
+			'deleted' => TRUE
+		], 
+		'where' => ['customer_id' => $customer_id],
+		'table' => 'locations'
+	];
+	$dbhelper->update($params);
+
     	header("Location: customers.php?message=Customer Removed");
     	die();
 

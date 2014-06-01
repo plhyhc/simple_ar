@@ -5,5 +5,9 @@ $main->get_header();
 ?>
 			<h3>Reports</h3>
 
-			<small>Please request the reports you would like to see.</small>
+			<br />
+
+			<ul>
+			<li><a href="reports_form.php?id=1">Monthly Overview</a></li>
+			</ul>
 <?php $main->get_footer(); ?>
