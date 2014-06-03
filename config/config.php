@@ -1,5 +1,8 @@
 <?php
 
+/////////////////
+// Database config items
+
 $db_params = [
 'db_name' => '<un_set>',
 'db_host' => '<un_set>',
