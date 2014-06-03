@@ -33,7 +33,9 @@ class Customers extends DBHelper{
 		return $this->insert_into($insert_params);
 	}
 
-
+	function update_customer($params){
+		return $this->update($params);
+	}
 
 	function get_location_check($params){
 		$location_id = '';

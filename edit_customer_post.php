@@ -4,43 +4,44 @@ require("config/main.php");
 
 $type = $_POST['type'];
 $message = "";
-
+//die($_POST['customer_name']);
 if($type == 'save'){
 	$customer_id = $_POST['customer_id'];
-	$customer_name = $_POST['customer_name'];
+	$customer_name = addslashes($_POST['customer_name']);
 	$customer_email = $_POST['customer_email'];
-
-	$params = ['executes' => [
+	//die(print_r($_POST));
+	$c_params = ['executes' => [
 			'name' => $customer_name,
 			'email' => $customer_email
 		], 
 		'where' => ['id' => $customer_id],
 		'table' => 'customers'
 	];
-	$dbhelper->update($params);
-
+	//die(print_r($params));
+	$c_customers->update_customer($c_params);
+	unset($c_params);
 	$location_ids = $_POST['location_id'];
 	$customer_address = $_POST['customer_address'];
 	$customer_city = $_POST['customer_city'];
 	$customer_zip = $_POST['customer_zip'];
 	$customer_phone = $_POST['customer_phone'];
 	$customer_fax = $_POST['customer_fax'];
-
 	for($x=0;$x<count($location_ids);$x++){
 		if($location_ids[$x]){
 			//update existing
 
-			$params = ['executes' => [
-					'address' => $customer_address,
-					'city' => $customer_city,
-					'zip' => $customer_zip,
-					'phone' => $customer_phone,
-					'fax' => $customer_fax
+			$l_params = ['executes' => [
+					'address' 		=> $customer_address[$x],
+					'city'			=> $customer_city[$x],
+					'zip'			=> $customer_zip[$x],
+					'phone'			=> $customer_phone[$x],
+					'fax'			=> $customer_fax[$x],
 				], 
 				'where' => ['id' => $location_ids[$x]],
 				'table' => 'locations'
 			];
-			$dbhelper->update($params);
+			$dbhelper->update($l_params);
+			unset($l_params);
 
 		} else {
 			//add new location, if variable exist

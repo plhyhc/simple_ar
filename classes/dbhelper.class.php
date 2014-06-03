@@ -35,21 +35,21 @@ class DBHelper {
 	public function update($params)
 	{
 		$sql_columns = '';
-		foreach(array_keys($params['executes']) as $column){
-			$sql_columns .= $column.' = :'.$column.",";
+		$values = [];
+		foreach($params['executes'] as $column => $value){
+			$sql_columns .= $column.' = ?, ';
+			$values[] = $value;
 		}
 		$where_columns = '';
 		foreach($params['where'] as $column => $value){
-			$where_columns .= $column." = '".$value."' and ";
+			$where_columns .= $column." = ? and ";
+			$values[] = $value;
 		}
 		$where_columns = substr($where_columns,0,-5);
-		$sql_columns = substr($sql_columns,0,-1);
+		$sql_columns = substr($sql_columns,0,-2);
 		$sql = "UPDATE {$params['table']} SET $sql_columns WHERE $where_columns";
-        $stmt = $this->krdb->prepare ($sql);
-        foreach($params['executes'] as $column => $value){
-        	$stmt -> bindParam(':'.$column, $value);
-        }
-        $stmt -> execute();
+		$stmt = $this->krdb->prepare ($sql);
+        $stmt -> execute($values);
         $stmt->closeCursor();
     	unset($stmt);
 
