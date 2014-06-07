@@ -8,6 +8,12 @@ CREATE TABLE IF NOT EXISTS `customers` (
   PRIMARY KEY (`id`)
 ) ;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `locations`
+--
+
 CREATE TABLE IF NOT EXISTS `locations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) DEFAULT NULL,
@@ -20,12 +26,19 @@ CREATE TABLE IF NOT EXISTS `locations` (
   `deleted` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `customer_id` (`customer_id`)
-) ;
+)  ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `receivables`
+--
 
 CREATE TABLE IF NOT EXISTS `receivables` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) DEFAULT NULL,
   `location_id` int(11) NOT NULL,
+  `invoice_number` int(11) DEFAULT NULL,
   `pickup_date` date DEFAULT NULL,
   `delivery_date` date DEFAULT NULL,
   `pickup_action_id` int(11) DEFAULT NULL,
@@ -39,8 +52,15 @@ CREATE TABLE IF NOT EXISTS `receivables` (
   KEY `customer_id` (`customer_id`),
   KEY `location_id` (`location_id`),
   KEY `delivery_date` (`delivery_date`),
-  KEY `pickup_date` (`pickup_date`)
-) ;
+  KEY `pickup_date` (`pickup_date`),
+  KEY `invoice_number` (`invoice_number`)
+)  ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -49,4 +69,4 @@ CREATE TABLE IF NOT EXISTS `users` (
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `username` (`username`)
-);
+) ;

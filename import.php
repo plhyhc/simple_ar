@@ -11,12 +11,18 @@ if(isset($_FILES['file_upload']['tmp_name'])){
   $check_count = 0;
 } else {
   $dir = 'imports/';
-  $files1 = scandir($dir);
+  if(file_exists($dir)){
+    $files1 = scandir($dir);
+  } else {
+    $files = [];
+  }
   $files_names = $files1;
 }
-foreach($files1 as $k => $f){
-  if(in_array($f,['.','..','.DS_Store'])){
-    unset($files1[$k]);
+if(count($files1)){
+  foreach($files1 as $k => $f){
+    if(in_array($f,['.','..','.DS_Store'])){
+      unset($files1[$k]);
+    }
   }
 }
 
@@ -41,7 +47,7 @@ if(count($files1) > $check_count){
 
         while (($data = fgetcsv($handle, 0, "\t")) !== FALSE) {
             $num = count($data);
-
+            //customer name, address, city & zip, phone, fax, invoice number, pickup date, deposit, delivery date, total, complete
             $customer_name    = trim($data[0]);
             $address      = trim($data[1]);
             $city_zip       = trim($data[2]);
@@ -135,7 +141,8 @@ if(count($files1) > $check_count){
 }
   ?>
   <h3>Import Files</h3>
-  <small>Upload single files one by one, or place in "imports" folder to import multiple files</small>
+  <small>Upload single files one by one, or place in "imports" folder to import multiple files</small><br />
+  <small>Files are tab delimited text file with data in the following order: customer name, address, city & zip, phone, fax, invoice number, pickup date, deposit, delivery date, total, complete</small><br />
   <br /><br />
   <form method="post" name="file_u" action="import.php" enctype="multipart/form-data">
   Single File Upload: <input type="file" name="file_upload" /><br />

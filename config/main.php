@@ -17,7 +17,7 @@ if($not_logged_in){
 include 'config.php';
 
 if(in_array('<un_set>',$db_params)){
-    header("Location: install");
+    header("Location: install.php");
     die();
 }
 

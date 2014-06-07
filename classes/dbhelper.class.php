@@ -55,5 +55,9 @@ class DBHelper {
 
 	}
 
+	public function create_db($sql){
+		$this->krdb->exec($sql);
+	}
+
 
 }

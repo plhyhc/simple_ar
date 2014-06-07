@@ -20,4 +20,11 @@ class Users extends DBHelper {
 	    return $user_id;
 	}
 
+	function create_user($params){
+		$insert_params = [];
+		$insert_params['table'] = 'users';
+		$insert_params['executes'] = $params;
+		return $this->insert_into($insert_params);
+	}
+
 }
