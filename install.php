@@ -58,13 +58,19 @@ if(isset($_POST['db_host'])){
 <html>
 <head>
 
-
+<style>
+    .shadow {
+	  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+		-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+		box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+	}
+</style>
 </head>
 <body style="background-color: grey">
 
 <br />
 <br />
-<center><div style="background-color: white; width:50%">
+<center><div style="background-color: white; width:50%" class="shadow">
 <br /><br />
 <h3>Install Setup Guide</h3>
 <hr>
