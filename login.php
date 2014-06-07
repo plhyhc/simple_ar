@@ -42,28 +42,42 @@ session_destroy();
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="" name="description"/>
 <meta content="" name="author"/>
+<!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
 
+    <!-- Add custom CSS here -->
+    <link href="css/sb-admin.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css">
+
+    <style>
+    .shadow {
+	  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+		-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+		box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+	}
+</style>
 </head>
 <body style="background-color: grey">
 
 <br />
 <br />
-<center><div style="background-color: white; width:50%; ">
+<center><div style="background-color: white; width:50%; " class="shadow">
 <br />
+	<div style="width: 75%;text-align: left;">
 	<!-- BEGIN LOGIN FORM -->
 	<form class="login-form" action="login.php" method="post">
 		<h3 class="form-title">Login to your account</h3>
 		<div class="form-group">
 			<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
 			<div class="input-icon">
-				<i class="fa fa-user"></i>
-				<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" name="username" id="username"/>
+				<i class="fa fa-user"> Username</i>
+				<input class="form-control" type="text" autocomplete="off" placeholder="Username" name="username" id="username"/>
 			</div>
 		</div>
 		<div class="form-group">
 			
 			<div class="input-icon">
-				<i class="fa fa-lock"></i>
+				<i class="fa fa-lock"> Password</i>
 				<input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password"/>
 			</div>
 		</div>
@@ -71,7 +85,8 @@ session_destroy();
 			<button type="submit" class="btn btn-info pull-right">
 			Login </button>
 		</div>
-		<br /><br />
+		<br /><br /><br /><br />
+		</div>
 	</form>
 	<!-- END LOGIN FORM -->
 <?php
