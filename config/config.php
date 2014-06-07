@@ -14,6 +14,6 @@ date_default_timezone_set('America/Los_Angeles');
 
 //////////////////////////
 // This salt is used to double hash the passwords.
-$salt = '_kraft_simple_ar';
+$salt = '_simple_ar_saltie_';
 
 ?>
