@@ -28,7 +28,7 @@ var Custom = function () {
                         "sPaginationType": "full_numbers",
                         "bLengthChange": false,
                         "iDisplayLength": 40,
-                        "order" : [[ 3,"desc"]]
+                        "order" : [[ 8,"desc"]]
                       });
 
         },

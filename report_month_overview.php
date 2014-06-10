@@ -6,8 +6,8 @@ $end_date = $_POST['year']."-".$_POST['month'].'-'.date("t",strtotime($_POST['ye
 
 
 $params = [
-	"r.delivery_date >= '$start_date'",
-	"r.delivery_date <= '$end_date'",
+  "(case when r.delivery_date is null then r.pickup_date else r.delivery_date end) >= '$start_date'",
+  "(case when r.delivery_date is null then r.pickup_date else r.delivery_date end)  <= '$end_date'",
 ];
 
 $data = $r_receivables->get_receivables_list($params);
