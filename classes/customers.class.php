@@ -10,7 +10,7 @@ class Customers extends DBHelper{
 	function getby_name($customer_name){
 		$customer_id = '';
 		$sql = "SELECT id FROM customers 
-	        WHERE name = '$customer_name'
+	        WHERE name = '$customer_name' and deleted is null
 	        ";
 	    foreach ($this->krdb->query($sql) as $row) { 
 	         $customer_id = $row['id'];     

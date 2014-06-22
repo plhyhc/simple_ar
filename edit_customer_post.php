@@ -138,10 +138,10 @@ if($type == 'save'){
 
 	    $pickup_date = ($_POST['pickup_date']) ? date("Y-m-d",strtotime($_POST['pickup_date'])) : null;
 		$delivery_date = ($_POST['delivery_date']) ? date("Y-m-d",strtotime($_POST['delivery_date'])) : null;
-		$deposit = $_POST['deposit'];
-		$total = $_POST['total'];
-		$complete = $_POST['complete'];
-		$invoice_number = $_POST['invoice_number'];
+		$deposit = ($_POST['deposit']) ? $_POST['deposit'] : "0.0";
+		$total = ($_POST['total']) ? $_POST['total'] : "0.0";
+		$complete = ($_POST['complete']) ? $_POST['complete'] : "0.0";
+		$invoice_number = ($_POST['invoice_number']) ? $_POST['invoice_number'] : "0";
 
 		$rec_params = [
 	      'customer_id'       => $customer_id,
@@ -153,8 +153,15 @@ if($type == 'save'){
 	      'delivery_date'     => $delivery_date,
 	      'invoice_number'	=> $invoice_number
 	    ];
-
-	    $receiveble_id = $r_receivables->create_receivable($rec_params);
+	    $has_content = false;
+	    foreach($rec_params as $key => $value){
+	    	if($value && $value > '0.0' && ($key != 'customer_id' && $key != 'location_id')){
+	    		$has_content = true;
+	    	}
+	    }
+	    if($has_content){
+	    	$receiveble_id = $r_receivables->create_receivable($rec_params);
+		}
 
 	  header("Location: customers.php?message=Customer Added: ".$customer_name);
     	die();
