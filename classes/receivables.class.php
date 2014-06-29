@@ -18,6 +18,10 @@ class Receivables extends DBHelper {
 	    return $customer_id;
 	}
 
+	function update_receivable($params){
+		return $this->update($params);
+	}
+
 	function get_location_check($params){
 		$location_id = '';
 		$sql = "SELECT id FROM locations 
@@ -137,6 +141,18 @@ class Receivables extends DBHelper {
 			 GROUP BY del_month
 	        ";
 	    return $this->krdb->query($sql);
+	}
+
+	function get_receivables($id){
+		$sql = "SELECT *
+			 FROM receivables r
+			 WHERE r.id = '$id'
+	        ";
+	        $return = [];
+	        foreach($this->krdb->query($sql) as $row){
+	        	$return[] = $row;
+	        }
+	        return $return;
 	}
 
 

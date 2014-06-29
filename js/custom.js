@@ -39,7 +39,9 @@ var Custom = function () {
         },
 
         rec_fields: function(el) {
-            $("#complete").val(($("#deposit").val() *1) + ($("#total").val() *1));
+            var num = (($("#deposit").val() *1) + ($("#total").val() *1));
+            num = +num.toFixed(2);
+            $("#complete").val(num);
             this.checkDec(el);
         },
 
