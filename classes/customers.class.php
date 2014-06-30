@@ -43,6 +43,7 @@ class Customers extends DBHelper{
 	        WHERE address = '{$params['address']}'
 	        AND city = '{$params['city']}'
 	        AND phone = '{$params['phone']}'
+	        AND deleted is null
 	        ";
 	    foreach ($this->krdb->query($sql) as $row) { 
 	         $location_id = $row['id'];     

@@ -70,7 +70,7 @@ class Receivables extends DBHelper {
 				$where .= " and ".$clause;
 			}
 		}
-		$sql = "SELECT c.id,
+		$sql = "SELECT r.id,
 						l.id as location_id,
 						c.name,
 						l.address,
