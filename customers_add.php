@@ -60,7 +60,7 @@ if(isset($_GET['message'])){
     <td><input type="text" name="customer_phone" id="customer_phone" size="45" /></td>
   </tr>
   <tr>
-    <td style="text-align: right;">Fax</td>
+    <td style="text-align: right;">Cell</td>
     <td><input type="text" name="customer_fax" id="customer_fax" size="45" /></td>
   </tr>
   <tr>

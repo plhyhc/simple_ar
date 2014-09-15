@@ -31,7 +31,7 @@ if(isset($_GET['message'])){
     <th>City</th>
     <th>Zip</th>
     <th>Phone</th>
-    <th>Fax</th>
+    <th>Cell</th>
     <th>Actions</th>
   </tr>
 </thead>

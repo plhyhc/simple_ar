@@ -61,7 +61,7 @@ if(isset($_GET['message'])){
     <td><input type="text" name="customer_phone[]" id="customer_phone" value="<?php echo $li['phone']; ?>" size="45" /></td>
   </tr>
   <tr>
-    <td>Fax</td>
+    <td>Cell</td>
     <td><input type="text" name="customer_fax[]" id="customer_fax" value="<?php echo $li['fax']; ?>" size="45" /></td>
   </tr>
   <tr>

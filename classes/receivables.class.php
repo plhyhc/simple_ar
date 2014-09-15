@@ -89,7 +89,7 @@ class Receivables extends DBHelper {
 			 LEFT JOIN customers c on c.id = r.customer_id
 			 LEFT JOIN locations l on l.customer_id = c.id
 			 WHERE l.deleted is not true and c.deleted is not true $where
-			 Order by r.date_added desc
+			 Order by c.name asc
 	        ";
 	    return $this->krdb->query($sql);
 	}
